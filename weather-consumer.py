@@ -7,20 +7,16 @@ def main():
     app = Application(
         # set broker(s)
         broker_address="localhost:19092",
-
         # set the logging level
         loglevel="DEBUG",
-
         # define the consumer group
         consumer_group="weather_reader",
-
-        # processing guarantees: 
+        # processing guarantees:
         #   - exactly-once   - msg will be processe exactly once
         #   - at-least-once  - may be processed more than once
         #   KAFKA native but not in Quix Streams:
         #   - at-most-once   - if process fails it will not be retried
         processing_guarantee="exactly-once",
-
         # set the offset reset - either earliest || latest
         auto_offset_reset="earliest",
     )
@@ -43,6 +39,7 @@ def main():
                 print(f"{offset} {key} {value}")
                 consumer.store_offsets(msg)
                 time.sleep(10)
+
 
 if __name__ == "__main__":
     try:
